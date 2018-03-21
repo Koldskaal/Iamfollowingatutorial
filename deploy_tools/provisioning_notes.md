@@ -19,6 +19,20 @@ eg, on Ubuntu:
 * see nginx.template.conf
 * replace DOMAIN with, e.g., staging.my-domain.com
 
+* Generate nginx file
+cat ./deploy_tools/nginx.template.conf \
+    | sed "s/DOMAIN/live.denpizza.dk/g" \
+    | sudo tee /etc/nginx/sites-available/live.denpizza.dk
+
+* Creating a symlink
+sudo ln -s /etc/nginx/sites-available/live.denpizza.dk \
+    /etc/nginx/sites-enabled/live.denpizza.dk
+
+* Same for gunicorn
+cat ./deploy_tools/gunicorn-systemd.template.conf \
+    | sed "s/DOMAIN/live.denpizza.dk/g" \
+    | sudo tee /etc/systemd/system/gunicorn-live.denpizza.dk.service
+
 ## Systemd service
 
 * see gunicorn-systemd.template.service
